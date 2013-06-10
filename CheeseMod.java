@@ -50,7 +50,7 @@ public class CheeseMod {
     @Init
     public void load(FMLInitializationEvent event) {
     	
-    	cheese = new CheeseBlock(ids[0], 0, Material.ground)
+    	cheese = new CheeseBlock(ids[0], 0, Material.ground, ids[1])
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
         .setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
     	
