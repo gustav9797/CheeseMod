@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class CheeseBlock extends Block 
 {
 	int infectedId = 0;
-	int spreadAmount = 255;
+	int spreadAmount = 254;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
 	int[] zLoop = { 0, 0, 0, 0, 1, -1 };
@@ -37,7 +37,7 @@ public class CheeseBlock extends Block
 
 	public int tickRate()
 	{
-		return 2;
+		return 1;
 	}
 
 	@Override
@@ -111,10 +111,12 @@ public class CheeseBlock extends Block
 
 			try 
 			{
-				if (world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos) != super.blockID && world.setBlock(xSpreadPos, ySpreadPos, zSpreadPos, super.blockID) && world.getBlockMetadata(x, y, z)+1 <= 255) 
-				{ 
-					world.setBlockMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, (world.getBlockMetadata(x, y, z) + 2));
-
+				if (isEatable(world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos))) 
+				{
+					if (random.nextInt(8) == 0)
+						world.setBlockAndMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, this.blockID, world.getBlockMetadata(x, y, z)+1);
+					else
+						world.setBlockAndMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, this.blockID, world.getBlockMetadata(x, y, z));
 				}
 				
 				int xx, yy, zz;
@@ -159,8 +161,13 @@ public class CheeseBlock extends Block
 		}
 	}
 	
-	private boolean isEatable(int blockId) {
+	protected boolean isEatable(int blockId) {
 		return (blockId == 2 || blockId == 3 || blockId == 5 || blockId == 6 || blockId == 8 || blockId == 9 || blockId == 12 || blockId == 13 || blockId == 17 || blockId == 18 || blockId == 81 || blockId == 82 || blockId == 91 || blockId == 125 || blockId == 126 || blockId == 134);
+	}
+	
+	protected int thisBlockId()
+	{
+		return this.blockID;
 	}
 
 	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z, int firstx, int firsty, int firstz) 
