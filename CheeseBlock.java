@@ -12,10 +12,11 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block {
 	int infectedId = 0;
+	int spreadAmount = 255;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
 	int[] zLoop = { 0, 0, 0, 0, 1, -1 };
-	int[] blocksToTurnCheese = { stone.blockID, dirt.blockID, sand.blockID,
+	int[] blocksToTurnCheese = { dirt.blockID, sand.blockID,
 			gravel.blockID };
 
 	Random random = new Random();
@@ -79,7 +80,7 @@ public class CheeseBlock extends Block {
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random) {
-		if (world.getBlockMetadata(x, y, z) < 4) {
+		if (world.getBlockMetadata(x, y, z) < spreadAmount) {
 			int side = random.nextInt(5);
 			int xToSpread = 0;
 			int yToSpread = 0;
@@ -102,7 +103,7 @@ public class CheeseBlock extends Block {
 				break;
 			}
 			
-			int up = random.nextInt(150);
+			int up = random.nextInt(700);
 			if(up == 1){
 				yToSpread = 1;
 			}
