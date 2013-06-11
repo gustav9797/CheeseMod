@@ -26,6 +26,8 @@ public class CheeseMod {
 	
 	public static Block cheese;
 	public static Block infectedCheese;
+	public static Block gravestone;
+	public static OstWorldGenerator worldGen = new OstWorldGenerator();
 	
 	@Instance("CheeseMod")
     public static CheeseMod instance;
@@ -40,7 +42,7 @@ public class CheeseMod {
 		ids = new int[] {
 				config.getBlock("blocks", "cheeseBlock", 2301).getInt(),
 				config.getBlock("blocks", "infectedCheeseBlock", 2302).getInt(),
-
+				config.getBlock("blocks","graveStone", 2303).getInt()
 		};
 		config.save();
 
@@ -50,6 +52,8 @@ public class CheeseMod {
     @Init
     public void load(FMLInitializationEvent event) {
     	
+    	GameRegistry.registerWorldGenerator(worldGen);
+    	
     	cheese = new CheeseBlock(ids[0], 0, Material.ground, ids[1])
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
         .setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
@@ -58,13 +62,22 @@ public class CheeseMod {
         MinecraftForge.setBlockHarvestLevel(cheese, "shovel", 0);
         GameRegistry.registerBlock(cheese, "cheese");
     	
+        
     	infectedCheese = new InfectedCheeseBlock(ids[1], 1, Material.ground)
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
         .setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
-        
+    	
         LanguageRegistry.addName(infectedCheese, "Infected Cheese");
         MinecraftForge.setBlockHarvestLevel(infectedCheese, "shovel", 0);
         GameRegistry.registerBlock(infectedCheese, "infectedCheese");
+        
+        
+        gravestone = new Gravestone(ids[2], 0)
+        .setBlockName("Gravestone").setCreativeTab(CreativeTabs.tabDecorations);
+        
+        LanguageRegistry.addName(gravestone, "Gravestone");
+        MinecraftForge.setBlockHarvestLevel(gravestone, "pickaxe", 3);
+        GameRegistry.registerBlock(gravestone, "gravestone");
        
         // End Basic Blocks
         
