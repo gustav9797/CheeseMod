@@ -27,7 +27,7 @@ public class CheeseMod {
 	public static Block cheese;
 	public static Block infectedCheese;
 	public static Block gravestone;
-	public static OstWorldGenerator worldGen = new OstWorldGenerator();
+	//public static OstWorldGenerator worldGen = new OstWorldGenerator();
 	
 	@Instance("CheeseMod")
     public static CheeseMod instance;
@@ -52,7 +52,7 @@ public class CheeseMod {
     @Init
     public void load(FMLInitializationEvent event) {
     	
-    	GameRegistry.registerWorldGenerator(worldGen);
+    	//GameRegistry.registerWorldGenerator(worldGen);
     	
     	cheese = new CheeseBlock(ids[0], 0, Material.ground, ids[1])
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
