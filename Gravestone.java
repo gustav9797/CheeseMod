@@ -1,6 +1,7 @@
 package com.github.gustav9797.CheeseMod;
 
 import net.minecraft.block.Block;
+import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ public class Gravestone extends Block {
             this.setStepSound(soundStoneFootstep);
             this.setHardness(5F);
             this.setBlockName("Gravestone");
-            //setBlockBounds(0.0625F, 0F, 0.375F, 0.9375F, 1.618F, 0.625F);
+            setBlockBounds(0.0625F, 0F, 0.375F, 0.9375F, 1.618F, 0.625F);
     }
 	
 	@Override

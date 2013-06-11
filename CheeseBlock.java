@@ -35,8 +35,8 @@ public class CheeseBlock extends Block
 		return "/CheeseMod/terrain.png";
 	}
 
-	public int tickRate() 
-
+	public int tickRate()
+	{
 		return 2;
 	}
 
@@ -59,27 +59,6 @@ public class CheeseBlock extends Block
 		v.y = v1.y - v2.y;
 		v.z = v1.z - v2.z;
 		return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	}
-
-	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z, int firstx, int firsty, int firstz) 
-	{
-
-		for (int i = 0; i < 6; i++) 
-		{
-			try {
-				int xVar = xLoop[i];
-				int yVar = yLoop[i];
-				int zVar = zLoop[i];
-				// System.out.println(xVar + " " + yVar + "" + zVar);
-
-				if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID && calcDist(new Vector3f(firstx, firsty, firstz), new Vector3f(x + xVar, y + yVar, z + zVar)) < (amount - 1 + random.nextInt(80))) 
-				{
-					world.setBlock(x + xVar, y + yVar, z + zVar, infectedId);
-					turnCheeseIntoInfected(world, amount, x + xVar, y + yVar, z
-							+ zVar, firstx, firsty, firstz);
-				}
-			} catch (Throwable e) {}
-		}
 	}
 
 	@Override
@@ -132,15 +111,119 @@ public class CheeseBlock extends Block
 
 			try 
 			{
-
 				if (world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos) != super.blockID && world.setBlock(xSpreadPos, ySpreadPos, zSpreadPos, super.blockID) && world.getBlockMetadata(x, y, z)+1 <= 255) 
 				{ 
-					world.setBlockMetadata(xSpreadPos, ySpreadPos, zSpreadPos, (world.getBlockMetadata(x, y, z) + 1));
+					world.setBlockMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, (world.getBlockMetadata(x, y, z) + 2));
 
+				}
+				
+				int xx, yy, zz;
+				
+				for (int i = 0; i < 6; i++)
+				{
+					xx = x;
+					yy = y;
+					zz = z;
+					
+					switch(i)
+					{
+					case 0:
+						xx++;
+						break;
+					case 1:
+						yy++;
+						break;
+					case 2:
+						zz++;
+						break;
+					case 3:
+						xx--;
+						break;
+					case 4:
+						yy--;
+						break;
+					case 5:
+						zz--;
+						break;
+					}
+					
+					int block = world.getBlockId(xx, yy, zz);
+					
+					if (calcNeighbors(world, xx, yy, zz) >= 4 && isEatable(block) || block == 0)
+					{
+						world.setBlockMetadataWithNotify(xx, yy, zz, (world.getBlockMetadata(x, y, z) + 3));
+					}
 				}
 			} catch (Throwable e) {}
 
 		}
 	}
+	
+	private boolean isEatable(int blockId) {
+		return (blockId == 2 || blockId == 3 || blockId == 5 || blockId == 6 || blockId == 8 || blockId == 9 || blockId == 12 || blockId == 13 || blockId == 17 || blockId == 18 || blockId == 81 || blockId == 82 || blockId == 91 || blockId == 125 || blockId == 126 || blockId == 134);
+	}
 
+	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z, int firstx, int firsty, int firstz) 
+	{
+
+		for (int i = 0; i < 6; i++) 
+		{
+			try {
+				int xVar = xLoop[i];
+				int yVar = yLoop[i];
+				int zVar = zLoop[i];
+				// System.out.println(xVar + " " + yVar + "" + zVar);
+
+				if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID && calcDist(new Vector3f(firstx, firsty, firstz), new Vector3f(x + xVar, y + yVar, z + zVar)) < (amount - 1 + random.nextInt(80))) 
+				{
+					world.setBlock(x + xVar, y + yVar, z + zVar, infectedId);
+					turnCheeseIntoInfected(world, amount, x + xVar, y + yVar, z
+							+ zVar, firstx, firsty, firstz);
+				}
+			} catch (Throwable e) {}
+		}
+	}
+
+	private int calcNeighbors(World world, int x, int y, int z)
+	{
+		int xx,yy,zz;
+		int neighbors = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			xx = x;
+			yy = y;
+			zz = z;
+			
+			switch(i)
+			{
+			case 0:
+				xx++;
+				break;
+			case 1:
+				yy++;
+				break;
+			case 2:
+				zz++;
+				break;
+			case 3:
+				xx--;
+				break;
+			case 4:
+				yy--;
+				break;
+			case 5:
+				zz--;
+				break;
+			}
+			
+			if (isCheese(world.getBlockId(xx, yy, zz)))
+				neighbors++;
+		}
+		return neighbors;
+	}
+	
+	private boolean isCheese(int blockID)
+	{
+		return (blockID == this.blockID);
+	}
 }

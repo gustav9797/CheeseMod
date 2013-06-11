@@ -69,15 +69,15 @@ public class OstWorldGenerator implements IWorldGenerator {
 			int xx = 0;
 			int zz = 0;
 			
-			int width = 8 + random.nextInt(6)*2;
-			int height = width + 4 + random.nextInt(4)*2;
+			int width = 8 + random.nextInt(6)*4;
+			int height = width + 4 + random.nextInt(4)*4;
 			
 			switch (angle%2)
 			{
-				case 0:
+				case 1:
 					xx = width;
 					zz = height;
-				case 1:
+				case 0:
 					xx = height;
 					zz = width;
 			}
@@ -106,16 +106,26 @@ public class OstWorldGenerator implements IWorldGenerator {
 								}
 								world.setBlockAndMetadataWithNotify(x + xxx, y , z + zzz, 139, random.nextInt(3) == 0 ? 1:0); //"door"
 							}
-							else if (Math.abs(xxx)%2 == 1 && Math.abs(zzz)%2 == 1) // gravelstones
+							else if (Math.abs(xxx)%(4-2*angle%2) == 1 && Math.abs(zzz)%(2+2*angle%2) == 1 && random.nextInt(2) == 0) // gravelstones
 							{
 								world.setBlockAndMetadata(x + xxx, y, z + zzz, CheeseMod.gravestone.blockID/**/, angle);//gravelstone
 								world.setBlockAndMetadata(x + xxx, y-2, z + zzz, 52, 54); //zombie spawner
-								TileEntityMobSpawner var19 = (TileEntityMobSpawner)world.getBlockTileEntity(x + xxx, y-2, z + zzz);
+								TileEntityMobSpawner var19 = (TileEntityMobSpawner)world.getBlockTileEntity(x + xxx, y, z + zzz);
 								var19.setMobID("Zombie");
 							}
 							if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0) // cobblestone path
 							{
 								world.setBlockAndMetadata(x + xxx, y-1 , z + zzz, 4, random.nextInt(3) == 0 ? 1:0);
+								
+								//torches
+								if (Math.abs(xxx)*(angle%2)+1-angle%2 == 1 && Math.abs(zzz)*(1-angle%2)+angle%2 == 1)
+								{
+									world.setBlockWithNotify(x + xxx + 1 - angle%2, y , z + zzz + angle%2, 94);
+									world.setBlockWithNotify(x + xxx - 1 + angle%2, y , z + zzz - angle%2, 94);
+									
+									world.setBlockWithNotify(x + xxx + 1 - angle%2, y+1 , z + zzz + angle%2, 59);
+									world.setBlockWithNotify(x + xxx - 1 + angle%2, y+1 , z + zzz - angle%2, 59);
+								}
 							}
 							break;
 						}
