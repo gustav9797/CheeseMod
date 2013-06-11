@@ -127,7 +127,7 @@ public class CheeseBlock extends Block {
 
 				if (world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos) != super.blockID
 						&& world.setBlock(xSpreadPos, ySpreadPos, zSpreadPos,
-								super.blockID)) {
+								super.blockID) && world.getBlockMetadata(x, y, z)+1 <= 255) {
 					world.setBlockMetadata(xSpreadPos, ySpreadPos, zSpreadPos,
 							(world.getBlockMetadata(x, y, z) + 1));
 
