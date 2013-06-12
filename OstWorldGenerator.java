@@ -51,8 +51,8 @@ public class OstWorldGenerator implements IWorldGenerator {
 						
 						
 						//if (yy > 0 && yy < 255)
-						//if (world.getBlockId(x + xx, y + yy, z + zz) == 1)
-						//	world.setBlock(x + xx, y + yy, z + zz, 523);
+						if (world.getBlockId(x + xx, y + yy, z + zz) == 3)
+							world.setBlock(x + xx, y + yy, z + zz, CheeseMod.cheese.blockID);
 						
 						
 					}
@@ -82,52 +82,85 @@ public class OstWorldGenerator implements IWorldGenerator {
 					zz = width;
 			}
 			
-			for (int xxx = -(xx-1)/2; xxx <= (xx-1)/2; xxx++)
+			int minheight = 256;
+			int maxheight = 0;
+			
+			for (int xxx = -(xx-1)/2; xxx <= (xx-1)/2 && minheight > 0; xxx++)
 			{
-				for (int zzz = -(zz-1)/2; zzz <= (zz-1)/2; zzz++)
+				for (int zzz = -(zz-1)/2; zzz <= (zz-1)/2 && minheight > 0; zzz++)
 				{
 					for (int y = 255; y > 32; y--)
 					{
 						int block = world.getBlockId(x+xxx, y-1, z+zzz);
-						if (block == 2 || block == 12)
+						
+						if (block == 2 || block == 12 || block == 13)
 						{
-							if (Math.abs(xxx) == (xx-1)/2 || Math.abs(zzz) == (zz-1)/2) // walls and door
-							{
-								if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0)
-								{
-									if (angle == 0 && zzz == -(zz-1)/2 ||
-										angle == 1 && xxx == -(xx-1)/2 ||
-										angle == 2 && zzz == (zz-1)/2 ||
-										angle == 3 && xxx == (xx-1)/2)
-									{
-										world.setBlockAndMetadataWithNotify(x + xxx, y, z + zzz, 107, angle); //walls
-										break;
-									}
-								}
-								world.setBlockAndMetadataWithNotify(x + xxx, y , z + zzz, 139, random.nextInt(3) == 0 ? 1:0); //"door"
-							}
-							else if (Math.abs(xxx)%(4-2*angle%2) == 1 && Math.abs(zzz)%(2+2*angle%2) == 1 && random.nextInt(2) == 0) // gravelstones
-							{
-								world.setBlockAndMetadata(x + xxx, y, z + zzz, CheeseMod.gravestone.blockID/**/, angle);//gravelstone
-								world.setBlockAndMetadata(x + xxx, y-2, z + zzz, 52, 54); //zombie spawner
-								TileEntityMobSpawner var19 = (TileEntityMobSpawner)world.getBlockTileEntity(x + xxx, y, z + zzz);
-								var19.setMobID("Zombie");
-							}
-							if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0) // cobblestone path
-							{
-								world.setBlockAndMetadata(x + xxx, y-1 , z + zzz, 4, random.nextInt(3) == 0 ? 1:0);
-								
-								//torches
-								if (Math.abs(xxx)*(angle%2)+1-angle%2 == 1 && Math.abs(zzz)*(1-angle%2)+angle%2 == 1)
-								{
-									world.setBlockWithNotify(x + xxx + 1 - angle%2, y , z + zzz + angle%2, 94);
-									world.setBlockWithNotify(x + xxx - 1 + angle%2, y , z + zzz - angle%2, 94);
-									
-									world.setBlockWithNotify(x + xxx + 1 - angle%2, y+1 , z + zzz + angle%2, 59);
-									world.setBlockWithNotify(x + xxx - 1 + angle%2, y+1 , z + zzz - angle%2, 59);
-								}
-							}
+							if (y > maxheight)
+								maxheight = y;
+							
+							if (y < minheight)
+								minheight = y;
+							
 							break;
+						}
+						else if (block == 8 || block == 9)
+						{
+							minheight = 0;
+							break;
+						}
+					}
+				}
+			}
+			
+			if (maxheight - minheight < 4)
+			{
+				for (int xxx = -(xx-1)/2; xxx <= (xx-1)/2; xxx++)
+				{
+					for (int zzz = -(zz-1)/2; zzz <= (zz-1)/2; zzz++)
+					{
+						for (int y = 255; y > 32; y--)
+						{
+							int block = world.getBlockId(x+xxx, y-1, z+zzz);
+							if (block == 2 || block == 12)
+							{
+								if (Math.abs(xxx) == (xx-1)/2 || Math.abs(zzz) == (zz-1)/2) // walls and door
+								{
+									if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0)
+									{
+										if (angle == 0 && zzz == -(zz-1)/2 ||
+											angle == 1 && xxx == -(xx-1)/2 ||
+											angle == 2 && zzz == (zz-1)/2 ||
+											angle == 3 && xxx == (xx-1)/2)
+										{
+											world.setBlockAndMetadataWithNotify(x + xxx, y, z + zzz, 107, angle); //walls
+											break;
+										}
+									}
+									world.setBlockAndMetadataWithNotify(x + xxx, y , z + zzz, 139, random.nextInt(3) == 0 ? 1:0); //"door"
+								}
+								else if (Math.abs(xxx)%(4-2*angle%2) == 1 && Math.abs(zzz)%(2+2*angle%2) == 1 && random.nextInt(2) == 0) // gravelstones
+								{
+									world.setBlockAndMetadata(x + xxx, y, z + zzz, CheeseMod.gravestone.blockID/**/, angle);//gravelstone
+									world.setBlockAndMetadata(x + xxx, y-2, z + zzz, 52, 54); //zombie spawner
+									TileEntityMobSpawner var19 = (TileEntityMobSpawner)world.getBlockTileEntity(x + xxx, y-2, z + zzz);
+									var19.setMobID("Grave Zombie");
+								}
+								if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0) // cobblestone path
+								{
+									world.setBlockAndMetadata(x + xxx, y-1 , z + zzz, 4, random.nextInt(3) == 0 ? 1:0);
+									
+									//torches
+									/*if (Math.abs(xxx)*(angle%2)+1-angle%2 == 1 && Math.abs(zzz)*(1-angle%2)+angle%2 == 1)
+									{
+										world.setBlockWithNotify(x + xxx + 1 - angle%2, y , z + zzz + angle%2, 85);
+										world.setBlockWithNotify(x + xxx - 1 + angle%2, y , z + zzz - angle%2, 85);
+										
+										world.setBlockWithNotify(x + xxx + 1 - angle%2, y+1 , z + zzz + angle%2, 50);
+										world.setBlockWithNotify(x + xxx - 1 + angle%2, y+1 , z + zzz - angle%2, 50);
+									}*/
+								}
+								break;
+							}
 						}
 					}
 				}
