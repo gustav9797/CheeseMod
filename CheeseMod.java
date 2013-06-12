@@ -59,7 +59,7 @@ public class CheeseMod {
     	
     	GameRegistry.registerWorldGenerator(worldGen);
     	
-    	 ModLoader.registerEntityID(EntityGraveZombie.class, "Grave Zombie", 1334);
+    	 ModLoader.registerEntityID(EntityGraveZombie.class, "Grave Zombie",  ModLoader.getUniqueEntityId());
     	
     	cheese = new CheeseBlock(ids[0], 0, Material.ground, ids[1])
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
