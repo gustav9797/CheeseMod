@@ -66,32 +66,36 @@ public class CheeseBlock extends Block
 	{
 		if (world.getBlockMetadata(x, y, z) < spreadAmount) 
 		{
-			int side = random.nextInt(5);
+			int side = random.nextInt(6);
 			int xToSpread = 0;
 			int yToSpread = 0;
 			int zToSpread = 0;
 			switch (side) 
 			{
 			case 0:
-				xToSpread -= 1;
+				xToSpread--;
 				break;
 			case 1:
-				xToSpread += 1;
+				xToSpread++;
 				break;
 			case 2:
-				yToSpread -= 1;
+				yToSpread--;
 				break;
 			case 3:
-				zToSpread -= 1;
+				zToSpread--;
 				break;
 			case 4:
-				zToSpread += 1;
+				zToSpread++;
 				break;
+			case 5:
+				yToSpread++;
+				break;
+				
 			}
 			
-			int up = random.nextInt(700);
-			if(up == 1)
-				yToSpread = 1;
+			//int up = random.nextInt(700);
+			//if(up == 1)
+			//	yToSpread = 1;
 
 			int xSpreadPos = x + xToSpread;
 			int ySpreadPos = y + yToSpread;
@@ -111,13 +115,14 @@ public class CheeseBlock extends Block
 
 			try 
 			{
-				if (isEatable(world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos))) 
+				Grow(world, xSpreadPos, ySpreadPos, zSpreadPos);
+				/*if (isEatable(world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos))) 
 				{
 					if (random.nextInt(8) == 0)
 						world.setBlockAndMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, this.blockID, world.getBlockMetadata(x, y, z)+1);
 					else
 						world.setBlockAndMetadataWithNotify(xSpreadPos, ySpreadPos, zSpreadPos, this.blockID, world.getBlockMetadata(x, y, z));
-				}
+				}*/
 				
 				int xx, yy, zz;
 				
@@ -153,7 +158,7 @@ public class CheeseBlock extends Block
 					
 					if (calcNeighbors(world, xx, yy, zz) >= 4 && isEatable(block) || block == 0)
 					{
-						world.setBlockMetadataWithNotify(xx, yy, zz, (world.getBlockMetadata(x, y, z) + 3));
+						Grow(world, xx, yy, zz);//world.setBlockMetadataWithNotify(xx, yy, zz, (world.getBlockMetadata(x, y, z) + 3));
 					}
 				}
 			} catch (Throwable e) {}
@@ -163,6 +168,30 @@ public class CheeseBlock extends Block
 	
 	protected boolean isEatable(int blockId) {
 		return (blockId == 2 || blockId == 3 || blockId == 5 || blockId == 6 || blockId == 8 || blockId == 9 || blockId == 12 || blockId == 13 || blockId == 17 || blockId == 18 || blockId == 81 || blockId == 82 || blockId == 91 || blockId == 125 || blockId == 126 || blockId == 134);
+	}
+	
+	protected void Grow(World world, int x, int y, int z)
+	{
+		int oldBlockID = world.getBlockId(x, y, z);
+		if (isEatable(oldBlockID))
+		{
+			int blockID;
+			
+			if (CheeseMod.cheeseTypes.containsKey(oldBlockID))
+			{
+				blockID = (Integer)CheeseMod.cheeseTypes.get(oldBlockID);
+			}
+			else
+			{
+				blockID = this.blockID;
+			}
+			
+			int metadata = world.getBlockMetadata(x, y, z);
+			if (random.nextInt(8) == 0)
+				metadata++;
+			
+			world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata);
+		}
 	}
 	
 	protected int thisBlockId()

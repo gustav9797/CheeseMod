@@ -1,5 +1,7 @@
 package com.github.gustav9797.CheeseMod;
 
+import java.util.Dictionary;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,6 +21,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 @Mod(modid="CheeseMod", name="CheeseMod", version="0.0.1")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -34,6 +40,8 @@ public class CheeseMod {
 	
 	public static EntityMob graveZombie;
 	
+	public static Map<Object, Object> cheeseTypes = new HashMap<Object, Object>();
+			
 	@Instance("CheeseMod")
     public static CheeseMod instance;
     
@@ -50,6 +58,8 @@ public class CheeseMod {
 				config.getBlock("blocks","graveStone", 2303).getInt()
 		};
 		config.save();
+		
+		//cheeseTypes.put(new int(?), new int(?));
 
 		MinecraftForge.EVENT_BUS.register(proxy);
 	}
