@@ -37,7 +37,7 @@ public class CheeseBlock extends Block
 
 	public int tickRate()
 	{
-		return 1;
+		return 1000;
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public class CheeseBlock extends Block
 	protected void Grow(World world, Random random, int x, int y, int z)
 	{
 		int oldBlockID = world.getBlockId(x, y, z);
-		if (isEatable(oldBlockID))
+		if (isEatable(oldBlockID) || (oldBlockID == 0 && random.nextInt(8) < calcNeighbors(world, x, y, z) - ((random.nextInt(32) == 0)? 0:1)))
 		{
 			int blockID;
 			
@@ -181,7 +181,7 @@ public class CheeseBlock extends Block
 			{
 				blockID = (Integer)CheeseMod.cheeseTypes.get(oldBlockID);
 			}
-			else if (random.nextInt(128) == 0)
+			else if (random.nextInt(16) == 0)
 			{
 				blockID = CheeseMod.glowcheese.blockID;
 			}
@@ -191,7 +191,7 @@ public class CheeseBlock extends Block
 			}
 			
 			int metadata = world.getBlockMetadata(x, y, z);
-			if (random.nextInt(8) == 0)
+			if (random.nextInt(2) == 0)
 				metadata++;
 			
 			world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata);
