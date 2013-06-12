@@ -12,15 +12,16 @@ import cpw.mods.fml.common.IWorldGenerator;
 public class OstWorldGenerator implements IWorldGenerator {
 	
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		for (int iii = 0; false && iii < 10; iii++)
+	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)
+	{
+		for (int iii = 0; iii < 10; iii++)
 		{
 			for (int y = 48; y < 128; y++)
 			{
 				int x = chunkX*16 + random.nextInt(16);
 				int z = chunkZ*16 + random.nextInt(16);
 				
-				for (int i = 0; i < random.nextInt(4); i++)
+				/*for (int i = 0; i < random.nextInt(4); i++)
 				{
 					int xx = 0;
 					int yy = 0;
@@ -47,18 +48,17 @@ public class OstWorldGenerator implements IWorldGenerator {
 						case 5:
 							zz--;
 							break;
-						}
+						}*/
 						
 						
 						//if (yy > 0 && yy < 255)
-						if (world.getBlockId(x + xx, y + yy, z + zz) == 3)
-							world.setBlock(x + xx, y + yy, z + zz, CheeseMod.cheese.blockID);
+						if (world.getBlockId(x, y, z) == 3 && random.nextInt(25) == 0)
+							world.setBlockWithNotify(x, y, z, CheeseMod.cheese.blockID);
 						
 						
-					}
+					//}
 				}
 			}
-		}
 		
 		if (random.nextInt(64) == 0)
 		{
