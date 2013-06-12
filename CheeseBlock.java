@@ -115,7 +115,7 @@ public class CheeseBlock extends Block
 
 			try 
 			{
-				Grow(world, xSpreadPos, ySpreadPos, zSpreadPos);
+				Grow(world, random, xSpreadPos, ySpreadPos, zSpreadPos);
 				/*if (isEatable(world.getBlockId(xSpreadPos, ySpreadPos, zSpreadPos))) 
 				{
 					if (random.nextInt(8) == 0)
@@ -158,7 +158,7 @@ public class CheeseBlock extends Block
 					
 					if (calcNeighbors(world, xx, yy, zz) >= 4 && isEatable(block) || block == 0)
 					{
-						Grow(world, xx, yy, zz);//world.setBlockMetadataWithNotify(xx, yy, zz, (world.getBlockMetadata(x, y, z) + 3));
+						Grow(world, random, xx, yy, zz);//world.setBlockMetadataWithNotify(xx, yy, zz, (world.getBlockMetadata(x, y, z) + 3));
 					}
 				}
 			} catch (Throwable e) {}
@@ -170,7 +170,7 @@ public class CheeseBlock extends Block
 		return (blockId == 2 || blockId == 3 || blockId == 5 || blockId == 6 || blockId == 8 || blockId == 9 || blockId == 12 || blockId == 13 || blockId == 17 || blockId == 18 || blockId == 81 || blockId == 82 || blockId == 91 || blockId == 125 || blockId == 126 || blockId == 134);
 	}
 	
-	protected void Grow(World world, int x, int y, int z)
+	protected void Grow(World world, Random random, int x, int y, int z)
 	{
 		int oldBlockID = world.getBlockId(x, y, z);
 		if (isEatable(oldBlockID))
@@ -180,6 +180,10 @@ public class CheeseBlock extends Block
 			if (CheeseMod.cheeseTypes.containsKey(oldBlockID))
 			{
 				blockID = (Integer)CheeseMod.cheeseTypes.get(oldBlockID);
+			}
+			else if (random.nextInt(128) == 0)
+			{
+				blockID = CheeseMod.glowcheese.blockID;
 			}
 			else
 			{

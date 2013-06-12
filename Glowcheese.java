@@ -9,4 +9,10 @@ public class Glowcheese extends Block {
 	{
 		super(id, texture, material);
 	}
+	
+	@Override
+	public String getTextureFile() 
+	{
+		return "/CheeseMod/terrain.png";
+	}
 }

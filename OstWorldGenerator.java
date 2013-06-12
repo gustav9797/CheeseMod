@@ -132,11 +132,11 @@ public class OstWorldGenerator implements IWorldGenerator {
 											angle == 2 && zzz == (zz-1)/2 ||
 											angle == 3 && xxx == (xx-1)/2)
 										{
-											world.setBlockAndMetadataWithNotify(x + xxx, y, z + zzz, 107, angle); //walls
+											//world.setBlockAndMetadataWithNotify(x + xxx, y, z + zzz, 0//107, angle); //door
 											break;
 										}
 									}
-									world.setBlockAndMetadataWithNotify(x + xxx, y , z + zzz, 139, random.nextInt(3) == 0 ? 1:0); //"door"
+									world.setBlockAndMetadataWithNotify(x + xxx, y , z + zzz, 139, random.nextInt(3) != 3 ? 1:0); //walls
 								}
 								else if (Math.abs(xxx)%(4-2*angle%2) == 1 && Math.abs(zzz)%(2+2*angle%2) == 1 && random.nextInt(2) == 0) // gravelstones
 								{
@@ -147,7 +147,7 @@ public class OstWorldGenerator implements IWorldGenerator {
 								}
 								if (angle%2 == 0 && xxx == 0 || angle%2 == 1 && zzz == 0) // cobblestone path
 								{
-									world.setBlockAndMetadata(x + xxx, y-1 , z + zzz, 4, random.nextInt(3) == 0 ? 1:0);
+									world.setBlockAndMetadata(x + xxx, y-1 , z + zzz, 48, random.nextInt(3) == 0 ? 1:0);
 									
 									//torches
 									/*if (Math.abs(xxx)*(angle%2)+1-angle%2 == 1 && Math.abs(zzz)*(1-angle%2)+angle%2 == 1)
