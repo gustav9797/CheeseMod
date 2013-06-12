@@ -35,6 +35,7 @@ public class CheeseMod {
 	public static Block cheese;
 	public static Block infectedCheese;
 	public static Block gravestone;
+	public static Block glowcheese;
 	
 	public static OstWorldGenerator worldGen = new OstWorldGenerator();
 	
@@ -55,7 +56,8 @@ public class CheeseMod {
 		ids = new int[] {
 				config.getBlock("blocks", "cheeseBlock", 2301).getInt(),
 				config.getBlock("blocks", "infectedCheeseBlock", 2302).getInt(),
-				config.getBlock("blocks","graveStone", 2303).getInt()
+				config.getBlock("blocks","graveStone", 2303).getInt(),
+				config.getBlock("blocks","glowcheese", 2304).getInt()
 		};
 		config.save();
 		
@@ -95,6 +97,14 @@ public class CheeseMod {
         LanguageRegistry.addName(gravestone, "Gravestone");
         MinecraftForge.setBlockHarvestLevel(gravestone, "pickaxe", 3);
         GameRegistry.registerBlock(gravestone, "gravestone");
+        
+        glowcheese = new Glowcheese(ids[3], 2,Material.glass)
+        .setHardness(1).setStepSound(Block.soundGlassFootstep).setLightValue(1)
+        .setBlockName("Glowcheese").setCreativeTab(CreativeTabs.tabBlock);
+        
+        LanguageRegistry.addName(glowcheese, "Glowcheese");
+        MinecraftForge.setBlockHarvestLevel(glowcheese, "pickaxe", 2);
+        GameRegistry.registerBlock(glowcheese, "glowcheese");
        
         // End Basic Blocks
         
