@@ -23,7 +23,7 @@ public class BlockCheeseGrass extends Block implements IPlantable
 	public String getTextureFile() 
 	{
 		return "/CheeseMod/terrain.png";
-		this.blockIndexInTexture = metadata;
+		//this.blockIndexInTexture = metadata;
 	}
 
     @Override
