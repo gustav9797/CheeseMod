@@ -12,12 +12,7 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
-<<<<<<< HEAD
-	int spreadAmount = 254;
-=======
-	int infectedId = 0;
 	int spreadAmount = 64;
->>>>>>> 8a60729054a0f854874bfea212e4b6e035cf9c3a
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
 	int[] zLoop = { 0, 0, 0, 0, 1, -1 };
@@ -213,21 +208,6 @@ public class CheeseBlock extends Block
 		
 		if (amount > 0)
 		{
-<<<<<<< HEAD
-			try {
-				int xVar = xLoop[i];
-				int yVar = yLoop[i];
-				int zVar = zLoop[i];
-				// System.out.println(xVar + " " + yVar + "" + zVar);
-
-				if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID && calcDist(new Vector3f(firstx, firsty, firstz), new Vector3f(x + xVar, y + yVar, z + zVar)) < (amount - 1 + random.nextInt(80))) 
-				{
-					world.setBlock(x + xVar, y + yVar, z + zVar, InfectedCheeseBlock.blockID);
-					turnCheeseIntoInfected(world, amount, x + xVar, y + yVar, z
-							+ zVar, firstx, firsty, firstz);
-				}
-			} catch (Throwable e) {}
-=======
 			for (int i = 0; i < 6; i++) 
 			{
 				try {
@@ -242,7 +222,6 @@ public class CheeseBlock extends Block
 					}
 				} catch (Throwable e) {}
 			}
->>>>>>> 8a60729054a0f854874bfea212e4b6e035cf9c3a
 		}
 	}
 
