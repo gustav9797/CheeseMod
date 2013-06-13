@@ -173,7 +173,7 @@ public class CheeseBlock extends Block
 	protected void Grow(World world, Random random, int x, int y, int z)
 	{
 		int oldBlockID = world.getBlockId(x, y, z);
-		if (isEatable(oldBlockID) || (oldBlockID == 0 && random.nextInt(8) < calcNeighbors(world, x, y, z) - ((random.nextInt(32) == 0)? 0:1)))
+		if (isEatable(oldBlockID) || (oldBlockID == 0 && random.nextInt(8) < calcNeighbors(world, x, y, z) - ((random.nextInt(128) == 0)? 0:((random.nextInt(4) == 0)? 1:2))))
 		{
 			int blockID;
 			

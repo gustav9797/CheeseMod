@@ -37,6 +37,9 @@ public class CheeseMod {
 	public static Block gravestone;
 	public static Block glowcheese;
 	
+	public static Block liquidCheeseFlowing;
+	public static Block liquidCheeseStill;
+	
 	public static OstWorldGenerator worldGen = new OstWorldGenerator();
 	
 	public static EntityMob graveZombie;
@@ -57,7 +60,9 @@ public class CheeseMod {
 				config.getBlock("blocks", "cheeseBlock", 2301).getInt(),
 				config.getBlock("blocks", "infectedCheeseBlock", 2302).getInt(),
 				config.getBlock("blocks","graveStone", 2303).getInt(),
-				config.getBlock("blocks","glowcheese", 2304).getInt()
+				config.getBlock("blocks","glowcheese", 2304).getInt(),
+				config.getBlock("blocks","liquidCheeseFlowing",2305).getInt(),
+				config.getBlock("blocks","liquidCheeseStill",2306).getInt()
 		};
 		config.save();
 		
@@ -98,6 +103,7 @@ public class CheeseMod {
         MinecraftForge.setBlockHarvestLevel(gravestone, "pickaxe", 3);
         GameRegistry.registerBlock(gravestone, "gravestone");
         
+        
         glowcheese = new Glowcheese(ids[3], 2,Material.glass)
         .setHardness(1).setStepSound(Block.soundGlassFootstep).setLightValue(1)
         .setBlockName("Glowcheese").setCreativeTab(CreativeTabs.tabBlock);
@@ -105,6 +111,20 @@ public class CheeseMod {
         LanguageRegistry.addName(glowcheese, "Glowcheese");
         MinecraftForge.setBlockHarvestLevel(glowcheese, "pickaxe", 2);
         GameRegistry.registerBlock(glowcheese, "glowcheese");
+        
+        
+        liquidCheeseFlowing = new LiquidCheeseFlowing(ids[4],Material.lava)
+        .setBlockName("LiquidCheeseFlowing").setCreativeTab(CreativeTabs.tabBlock);
+        
+        LanguageRegistry.addName(liquidCheeseFlowing, "LiquidCheeseFlowing");
+        GameRegistry.registerBlock(liquidCheeseFlowing, "liquidCheeseFlowing");
+        
+        
+        liquidCheeseStill = new LiquidCheeseStill(ids[5],Material.lava)
+        .setBlockName("LiquidCheeseStill").setCreativeTab(CreativeTabs.tabBlock);
+        
+        LanguageRegistry.addName(liquidCheeseStill, "LiquidCheeseStill");
+        GameRegistry.registerBlock(liquidCheeseStill, "liquidCheeseStill");
        
         // End Basic Blocks
         
