@@ -57,7 +57,7 @@ public class EntityGraveZombie extends EntityZombie {
     @SideOnly(Side.CLIENT)
     public String getTexture()
     {
-        return "CheeseMod/mob/gravelZombie.png";
+        return "/CheeseMod/mob/graveZombie.png";
     }
 	
 	/*@Override
