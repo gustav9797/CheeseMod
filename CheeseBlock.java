@@ -12,14 +12,7 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-	int infectedId = 0;
->>>>>>> 8a60729054a0f854874bfea212e4b6e035cf9c3a
->>>>>>> 1f4749a60a1ec3131c38b276e2f86e4f433bfa04
 	int spreadAmount = 64;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
