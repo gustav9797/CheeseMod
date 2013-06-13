@@ -37,7 +37,7 @@ public class CheeseMod {
 	public static Block gravestone;
 	public static Block glowcheese;
 	public static Block cheesegrass;
-	
+	public static Block blockPlantTest;
 	//public static Block liquidCheeseFlowing;
 	//public static Block liquidCheeseStill;
 	
@@ -62,7 +62,9 @@ public class CheeseMod {
 				config.getBlock("blocks", "infectedCheeseBlock", 2302).getInt(),
 				config.getBlock("blocks","graveStone", 2303).getInt(),
 				config.getBlock("blocks","glowcheese", 2304).getInt(),
-				config.getBlock("blocks","cheesegrass", 2305).getInt()
+				config.getBlock("blocks","cheesegrass", 2305).getInt(),
+				config.getBlock("blocks","blockPlantTest", 2306).getInt()
+				
 				//,
 				//config.getBlock("blocks","liquidCheeseFlowing",2305).getInt(),
 				//config.getBlock("blocks","liquidCheeseStill",2306).getInt()
@@ -87,12 +89,14 @@ public class CheeseMod {
     	gravestone = new Gravestone(ids[2], 0).setBlockName("Gravestone").setCreativeTab(CreativeTabs.tabDecorations);
     	glowcheese = new Glowcheese(ids[3], 2,Material.glass).setHardness(1).setStepSound(Block.soundGlassFootstep).setLightValue(1).setBlockName("Glowcheese").setCreativeTab(CreativeTabs.tabBlock);
     	cheesegrass = new BlockCheeseGrass(ids[4]).setBlockName("Cheesegrass").setCreativeTab(CreativeTabs.tabDecorations).setStepSound(Block.soundGrassFootstep);
+    	blockPlantTest = new BlockPlant(ids[5], 7, Material.wood).setBlockName("BlockPlantTest").setCreativeTab(CreativeTabs.tabDecorations);
     	
         LanguageRegistry.addName(cheese, "Cheese"); MinecraftForge.setBlockHarvestLevel(cheese, "shovel", 0); GameRegistry.registerBlock(cheese, "cheese");
         LanguageRegistry.addName(infectedCheese, "Infected Cheese"); MinecraftForge.setBlockHarvestLevel(infectedCheese, "shovel", 0); GameRegistry.registerBlock(infectedCheese, "infectedCheese");
         LanguageRegistry.addName(gravestone, "Gravestone"); MinecraftForge.setBlockHarvestLevel(gravestone, "pickaxe", 3); GameRegistry.registerBlock(gravestone, "gravestone");
         LanguageRegistry.addName(glowcheese, "Glowcheese"); MinecraftForge.setBlockHarvestLevel(glowcheese, "pickaxe", 2); GameRegistry.registerBlock(glowcheese, "glowcheese");
         LanguageRegistry.addName(cheesegrass, "Cheesegrass"); GameRegistry.registerBlock(cheesegrass, "cheesegrass");
+        LanguageRegistry.addName(blockPlantTest, "BlockPlantTest"); GameRegistry.registerBlock(blockPlantTest, "blockPlantTest");
         proxy.registerRenderers();
     }
     
