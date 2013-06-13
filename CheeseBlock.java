@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
-	int infectedId = 0;
 	int spreadAmount = 254;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
@@ -22,11 +21,11 @@ public class CheeseBlock extends Block
 
 	Random random = new Random();
 
-	public CheeseBlock(int id, int texture, Material material, int infectedId) 
+	public CheeseBlock(int id, int texture, Material material) 
 	{
 		super(id, texture, material);
-		this.infectedId = infectedId;
 		super.setTickRandomly(true);
+		blockID = id;
 	}
 
 	@Override
@@ -199,10 +198,7 @@ public class CheeseBlock extends Block
 		}
 	}
 	
-	protected int thisBlockId()
-	{
-		return this.blockID;
-	}
+	public static int blockID;
 
 	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z, int firstx, int firsty, int firstz) 
 	{
@@ -217,7 +213,7 @@ public class CheeseBlock extends Block
 
 				if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID && calcDist(new Vector3f(firstx, firsty, firstz), new Vector3f(x + xVar, y + yVar, z + zVar)) < (amount - 1 + random.nextInt(80))) 
 				{
-					world.setBlock(x + xVar, y + yVar, z + zVar, infectedId);
+					world.setBlock(x + xVar, y + yVar, z + zVar, InfectedCheeseBlock.blockID);
 					turnCheeseIntoInfected(world, amount, x + xVar, y + yVar, z
 							+ zVar, firstx, firsty, firstz);
 				}

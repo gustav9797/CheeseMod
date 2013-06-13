@@ -30,7 +30,7 @@ import java.util.Set;
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 
 public class CheeseMod {
-	private int[] ids;
+	private static int[] ids;
 	
 	public static Block cheese;
 	public static Block infectedCheese;
@@ -78,36 +78,24 @@ public class CheeseMod {
     	
     	 ModLoader.registerEntityID(EntityGraveZombie.class, "Grave Zombie",  ModLoader.getUniqueEntityId());
     	
-    	cheese = new CheeseBlock(ids[0], 0, Material.ground, ids[1])
-        .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
-        .setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
-    	
+    	 
+    		cheese = new CheeseBlock(ids[0], 0, Material.ground).setHardness(0.5F).setStepSound(Block.soundClothFootstep).setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
+    		infectedCheese = new InfectedCheeseBlock(ids[1], 1, Material.ground).setHardness(0.5F).setStepSound(Block.soundClothFootstep).setBlockName("infectedCheese").setCreativeTab(CreativeTabs.tabDecorations);
+    		gravestone = new Gravestone(ids[2], 0).setBlockName("Gravestone").setCreativeTab(CreativeTabs.tabDecorations);
+    		glowcheese = new Glowcheese(ids[3], 2,Material.glass).setHardness(1).setStepSound(Block.soundGlassFootstep).setLightValue(1).setBlockName("Glowcheese").setCreativeTab(CreativeTabs.tabBlock);
+    		
         LanguageRegistry.addName(cheese, "Cheese");
         MinecraftForge.setBlockHarvestLevel(cheese, "shovel", 0);
         GameRegistry.registerBlock(cheese, "cheese");
-    	
-        
-    	infectedCheese = new InfectedCheeseBlock(ids[1], 1, Material.ground)
-        .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
-        .setBlockName("infectedCheese").setCreativeTab(CreativeTabs.tabDecorations);
     	
         LanguageRegistry.addName(infectedCheese, "Infected Cheese");
         MinecraftForge.setBlockHarvestLevel(infectedCheese, "shovel", 0);
         GameRegistry.registerBlock(infectedCheese, "infectedCheese");
         
-        
-        gravestone = new Gravestone(ids[2], 0)
-        .setBlockName("Gravestone").setCreativeTab(CreativeTabs.tabDecorations);
-        
         LanguageRegistry.addName(gravestone, "Gravestone");
         MinecraftForge.setBlockHarvestLevel(gravestone, "pickaxe", 3);
         GameRegistry.registerBlock(gravestone, "gravestone");
-        
-        
-        glowcheese = new Glowcheese(ids[3], 2,Material.glass)
-        .setHardness(1).setStepSound(Block.soundGlassFootstep).setLightValue(1)
-        .setBlockName("Glowcheese").setCreativeTab(CreativeTabs.tabBlock);
-        
+
         LanguageRegistry.addName(glowcheese, "Glowcheese");
         MinecraftForge.setBlockHarvestLevel(glowcheese, "pickaxe", 2);
         GameRegistry.registerBlock(glowcheese, "glowcheese");
