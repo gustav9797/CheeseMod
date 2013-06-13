@@ -52,7 +52,7 @@ public class OstWorldGenerator implements IWorldGenerator {
 						
 						
 						//if (yy > 0 && yy < 255)
-						if (world.getBlockId(x, y, z) == 3 && random.nextInt(250) == 0)
+						if (world.getBlockId(x, y, z) == 3 && random.nextInt(2048) == 0)
 							world.setBlockWithNotify(x, y, z, CheeseMod.cheese.blockID);
 						
 						
