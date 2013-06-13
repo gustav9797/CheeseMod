@@ -33,7 +33,6 @@ public class EntityGraveZombie extends EntityZombie {
 	public void onUpdate()
 	{
 		super.onUpdate();
-		this.moveSpeed = 8.0F;
 	}
 	
 	@Override
@@ -45,7 +44,7 @@ public class EntityGraveZombie extends EntityZombie {
 	@Override
     public int getMaxHealth()
     {
-        return 12;
+        return 4;
     }
 	
 	@Override
@@ -63,7 +62,7 @@ public class EntityGraveZombie extends EntityZombie {
     @Override
     public float getSpeedModifier()
     {
-    	return(10);
+    	return(this.moveSpeed);
     }
 	
 	/*@Override
