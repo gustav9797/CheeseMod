@@ -194,6 +194,7 @@ public class CheeseBlock extends Block
 			if (random.nextInt(2) == 0)
 				metadata++;
 			
+			world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "random.bow", 4.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 			world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata);
 		}
 	}
