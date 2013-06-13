@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
-	int spreadAmount = 254;
+	int spreadAmount = 64;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
 	int[] zLoop = { 0, 0, 0, 0, 1, -1 };
@@ -108,7 +108,7 @@ public class CheeseBlock extends Block
 				int tempId = world.getBlockId(x + xVar, y + yVar, z + zVar);
 				if (tempId == mushroomRed.blockID || tempId == mushroomBrown.blockID) 
 				{
-					turnCheeseIntoInfected(world, 3, x, y, z, x, y, z);
+					turnCheeseIntoInfected(world, 64, x, y, z);
 				}
 			}
 
@@ -161,9 +161,10 @@ public class CheeseBlock extends Block
 					}
 				}
 			} catch (Throwable e) {}
-
 		}
 	}
+	
+	
 	
 	protected boolean isEatable(int blockId) {
 		return (blockId == 2 || blockId == 3 || blockId == 5 || blockId == 6 || blockId == 8 || blockId == 9 || blockId == 12 || blockId == 13 || blockId == 17 || blockId == 18 || blockId == 81 || blockId == 82 || blockId == 91 || blockId == 125 || blockId == 126 || blockId == 134);
@@ -189,9 +190,9 @@ public class CheeseBlock extends Block
 				blockID = this.blockID;
 			}
 			
-			int metadata = world.getBlockMetadata(x, y, z);
-			if (random.nextInt(2) == 0)
-				metadata++;
+			int metadata = world.getBlockMetadata(x, y, z)+1;
+			//if (random.nextInt(2) == 0)
+				//metadata++;
 			
 			world.playSoundEffect((double)x + 0.5D, (double)y + 0.5D, (double)z + 0.5D, "random.bow", 4.0F, world.rand.nextFloat() * 0.1F + 0.9F);
 			world.setBlockAndMetadataWithNotify(x, y, z, this.blockID, metadata);
@@ -200,24 +201,27 @@ public class CheeseBlock extends Block
 	
 	public static int blockID;
 
-	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z, int firstx, int firsty, int firstz) 
+	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z) 
 	{
 
-		for (int i = 0; i < 6; i++) 
+		world.setBlock(x, y, z, infectedId);
+		
+		if (amount > 0)
 		{
-			try {
-				int xVar = xLoop[i];
-				int yVar = yLoop[i];
-				int zVar = zLoop[i];
-				// System.out.println(xVar + " " + yVar + "" + zVar);
-
-				if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID && calcDist(new Vector3f(firstx, firsty, firstz), new Vector3f(x + xVar, y + yVar, z + zVar)) < (amount - 1 + random.nextInt(80))) 
-				{
-					world.setBlock(x + xVar, y + yVar, z + zVar, InfectedCheeseBlock.blockID);
-					turnCheeseIntoInfected(world, amount, x + xVar, y + yVar, z
-							+ zVar, firstx, firsty, firstz);
-				}
-			} catch (Throwable e) {}
+			for (int i = 0; i < 6; i++) 
+			{
+				try {
+					int xVar = xLoop[i];
+					int yVar = yLoop[i];
+					int zVar = zLoop[i];
+					// System.out.println(xVar + " " + yVar + "" + zVar);
+	
+					if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID) 
+					{
+						turnCheeseIntoInfected(world, amount-1, x + xVar, y + yVar, z + zVar);
+					}
+				} catch (Throwable e) {}
+			}
 		}
 	}
 
