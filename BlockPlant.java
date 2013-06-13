@@ -10,7 +10,7 @@ public class BlockPlant extends Block {
 
 	public BlockPlant(int par1, int par2, Material par3Material) {
 		super(par1, par2, par3Material);
-		
+		super.setTickRandomly(true);
 	}
 	
 	public void updateTick(World world, int x, int y, int z, Random random) 
@@ -36,6 +36,8 @@ public class BlockPlant extends Block {
 		case 5:
 			z--;
 			break;
+		//default:
+		//	return;
 		}
 		
 		Grow(world, random, x, y, z);
