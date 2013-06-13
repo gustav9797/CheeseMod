@@ -1,7 +1,10 @@
 package com.github.gustav9797.CheeseMod;
 
+import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
-
+import java.util.concurrent.*;
 import org.lwjgl.util.vector.Vector3f;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -13,7 +16,7 @@ import net.minecraft.world.World;
 public class CheeseBlock extends Block 
 {
 
-	int spreadAmount = 64;
+	int spreadAmount = 32;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
 	int[] zLoop = { 0, 0, 0, 0, 1, -1 };
@@ -110,7 +113,7 @@ public class CheeseBlock extends Block
 				int tempId = world.getBlockId(x + xVar, y + yVar, z + zVar);
 				if (tempId == mushroomRed.blockID || tempId == mushroomBrown.blockID) 
 				{
-					turnCheeseIntoInfected(world, 64, x, y, z);
+					turnCheeseIntoInfected(world, 12, x, y, z);
 				}
 			}
 
@@ -175,7 +178,7 @@ public class CheeseBlock extends Block
 	protected void Grow(World world, Random random, int x, int y, int z)
 	{
 		int oldBlockID = world.getBlockId(x, y, z);
-		if (isEatable(oldBlockID) || (oldBlockID == 0 && random.nextInt(8) < calcNeighbors(world, x, y, z) - ((random.nextInt(128) == 0)? 0:((random.nextInt(4) == 0)? 1:2))))
+		if (isEatable(oldBlockID) || (oldBlockID == 0 && random.nextInt(64) == 0 && random.nextInt(64) < calcNeighbors(world, x, y, z) - ((random.nextInt(8) == 0)? 0:((random.nextInt(4) == 0)? 1:2))))
 		{
 			int blockID;
 			
@@ -205,10 +208,50 @@ public class CheeseBlock extends Block
 
 	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z) 
 	{
-
-		world.setBlock(x, y, z, InfectedCheeseBlock.blockID);
+		world.setBlockAndMetadata(x, y, z, InfectedCheeseBlock.blockID, amount);
+		Queue<int[]> blockQueue = new LinkedList<int[]>();
 		
-		if (amount > 0)
+		blockQueue.add(new int[] {x,y,z,amount});
+		
+		int last = 256;
+		
+		while(!blockQueue.isEmpty())
+		{
+			int xx = blockQueue.element()[0];
+			int yy = blockQueue.element()[1];
+			int zz = blockQueue.element()[2];
+			int _amount = blockQueue.element()[3];
+			
+			blockQueue.poll();
+			
+			if (_amount < last)
+			{
+				System.out.println(_amount);
+				last = _amount;
+			}
+			
+			world.setBlock(xx, yy, zz, InfectedCheeseBlock.blockID);
+			
+			if (_amount > 0)
+			{
+				for (int i = 0; i < 6; i++) 
+				{
+					try {
+						int xVar = xLoop[i];
+						int yVar = yLoop[i];
+						int zVar = zLoop[i];
+						 
+						int block = world.getBlockId(xx + xVar, yy + yVar, zz + zVar);
+						if (block == super.blockID) 
+						{
+							blockQueue.add(new int[] {xx + xVar, yy + yVar, zz + zVar, _amount-1});
+						}
+					} catch (Throwable e) {}
+				}
+			}
+		}
+		
+		/*if (amount > 0)
 		{
 			for (int i = 0; i < 6; i++) 
 			{
@@ -216,15 +259,15 @@ public class CheeseBlock extends Block
 					int xVar = xLoop[i];
 					int yVar = yLoop[i];
 					int zVar = zLoop[i];
-					// System.out.println(xVar + " " + yVar + "" + zVar);
-	
-					if (world.getBlockId(x + xVar, y + yVar, z + zVar) == super.blockID) 
+					 System.out.println(xVar + " " + yVar + "" + zVar);
+					int block = world.getBlockId(x + xVar, y + yVar, z + zVar);
+					if (block == super.blockID || (block == InfectedCheeseBlock.blockID && world.getBlockMetadata(x + xVar, y + yVar, z + zVar) < amount-1)) 
 					{
-						turnCheeseIntoInfected(world, amount-1, x + xVar, y + yVar, z + zVar);
+						//turnCheeseIntoInfected(world, amount-1, x + xVar, y + yVar, z + zVar);
 					}
 				} catch (Throwable e) {}
 			}
-		}
+		}*/
 	}
 
 	private int calcNeighbors(World world, int x, int y, int z)
