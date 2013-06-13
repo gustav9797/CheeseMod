@@ -59,6 +59,12 @@ public class EntityGraveZombie extends EntityZombie {
     {
         return "/CheeseMod/mob/graveZombie.png";
     }
+    
+    @Override
+    public float getSpeedModifier()
+    {
+    	return(10);
+    }
 	
 	/*@Override
 	public void onLivingUpdate()
