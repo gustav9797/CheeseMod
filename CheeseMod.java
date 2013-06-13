@@ -89,7 +89,7 @@ public class CheeseMod {
         
     	infectedCheese = new InfectedCheeseBlock(ids[1], 1, Material.ground)
         .setHardness(0.5F).setStepSound(Block.soundClothFootstep)
-        .setBlockName("cheese").setCreativeTab(CreativeTabs.tabDecorations);
+        .setBlockName("infectedCheese").setCreativeTab(CreativeTabs.tabDecorations);
     	
         LanguageRegistry.addName(infectedCheese, "Infected Cheese");
         MinecraftForge.setBlockHarvestLevel(infectedCheese, "shovel", 0);
@@ -112,23 +112,7 @@ public class CheeseMod {
         MinecraftForge.setBlockHarvestLevel(glowcheese, "pickaxe", 2);
         GameRegistry.registerBlock(glowcheese, "glowcheese");
         
-        
-        /*liquidCheeseFlowing = new LiquidCheeseFlowing(ids[4],Material.lava)
-        .setBlockName("LiquidCheeseFlowing").setCreativeTab(CreativeTabs.tabBlock);
-        
-        LanguageRegistry.addName(liquidCheeseFlowing, "LiquidCheeseFlowing");
-        GameRegistry.registerBlock(liquidCheeseFlowing, "liquidCheeseFlowing");
-        
-        
-        liquidCheeseStill = new LiquidCheeseStill(ids[5],Material.lava)
-        .setBlockName("LiquidCheeseStill").setCreativeTab(CreativeTabs.tabBlock);
-        
-        LanguageRegistry.addName(liquidCheeseStill, "LiquidCheeseStill");
-        GameRegistry.registerBlock(liquidCheeseStill, "liquidCheeseStill");*/
-       
-        // End Basic Blocks
-        
-            proxy.registerRenderers();
+        proxy.registerRenderers();
     }
     
     @PostInit
