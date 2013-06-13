@@ -205,7 +205,7 @@ public class CheeseBlock extends Block
 	private void turnCheeseIntoInfected(World world, int amount, int x, int y, int z) 
 	{
 
-		world.setBlock(x, y, z, infectedId);
+		world.setBlock(x, y, z, InfectedCheeseBlock.blockID);
 		
 		if (amount > 0)
 		{
