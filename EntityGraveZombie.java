@@ -24,7 +24,7 @@ public class EntityGraveZombie extends EntityZombie {
 	public EntityGraveZombie(World world)
 	{
 		super(world);
-		this.texture = "CheeseMod/mob/gravelZombie.png";
+		this.texture = "/CheeseMod/mob/gravelZombie.png";
 		this.moveSpeed = 2.0F;
 		this.isImmuneToFire = true;
 	}
