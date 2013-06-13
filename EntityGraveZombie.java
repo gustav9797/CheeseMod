@@ -45,13 +45,13 @@ public class EntityGraveZombie extends EntityZombie {
 	@Override
     public int getMaxHealth()
     {
-        return 8;
+        return 12;
     }
 	
 	@Override
     public int getAttackStrength(Entity entity)
     {
-		return super.getAttackStrength(entity)*2;
+		return super.getAttackStrength(entity)>>1;
     }
 	
     @SideOnly(Side.CLIENT)
