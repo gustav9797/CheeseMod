@@ -167,6 +167,17 @@ public class CheeseBlock extends Block
 				}
 			} catch (Throwable e) {}
 		}
+		
+		if(world.getBlockId(x, y+1, z) == 0)
+		{
+			int temp = random.nextInt(1000);
+			if(temp > 0 && temp < 10)
+				world.setBlockAndMetadata(x, y+1, z, 2305, 0);
+			if(temp == 0)
+				world.setBlockAndMetadata(x, y+1, z, 2305, 1);
+			if(temp < 100 && temp >= 10)
+				world.setBlockAndMetadata(x, y+1, z, 2305, 2);
+		}
 	}
 	
 	
