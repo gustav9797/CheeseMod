@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
+	int infectedId = 0;
 	int spreadAmount = 64;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
@@ -59,6 +60,7 @@ public class CheeseBlock extends Block
 		v.z = v1.z - v2.z;
 		return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 	}
+	
 
 	@Override
 	public void updateTick(World world, int x, int y, int z, Random random) 
