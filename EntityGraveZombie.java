@@ -45,7 +45,7 @@ public class EntityGraveZombie extends EntityZombie {
 	@Override
     public int getMaxHealth()
     {
-        return 1;
+        return 8;
     }
 	
 	@Override
