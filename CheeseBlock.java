@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 public class CheeseBlock extends Block 
 {
+
 	int spreadAmount = 64;
 	int[] xLoop = { 1, -1, 0, 0, 0, 0 };
 	int[] yLoop = { 0, 0, 1, -1, 0, 0 };
